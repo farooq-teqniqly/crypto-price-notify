@@ -1,6 +1,7 @@
 param location string
 param baseName string
 param appSettings object
+param eventHubConnectionString string
 
 var functionAppName = '${baseName}-fa'
 var appInsightsKey = appInsights.properties.InstrumentationKey
@@ -97,6 +98,10 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
           value: '~4'
+        }
+        {
+          name: 'EVENT_HUB_CONNECTION_STRING'
+          value: eventHubConnectionString
         }
         {
           name: 'URL'

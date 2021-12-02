@@ -19,12 +19,30 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-module resourcesDeploy 'resources.bicep' = {
+module eventHubDeploy 'EventHub.bicep' = {
+  name: 'eventHubDeploy'
+  scope: rg
+  params: {
+    baseName: baseName
+    location: location
+  }
+}
+
+module resourcesDeploy 'FunctionApp.bicep' = {
   name: 'resourcesDeploy'
   scope: rg
   params: {
      appSettings: appSettings
      baseName: baseName
      location: location 
+     eventHubConnectionString: eventHubDeploy.outputs.deploymentOutputs.eventHub.connectionString
+  }
+}
+
+output deploymentOutputs object = {
+  resourceGroupName: rgName
+  eventHubDeployment: {
+    connectionString: eventHubDeploy.outputs.deploymentOutputs.eventHub.connectionString
+    name: eventHubDeploy.outputs.deploymentOutputs.eventHub.name
   }
 }
