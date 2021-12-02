@@ -25,5 +25,6 @@ def main(mytimer: func.TimerRequest, notification: func.Out[str]) -> None:
     notification.set(json.dumps({
         'currency': currency,
         'total': total,
-        'threshold': notification_on_total
+        'threshold': notification_on_total,
+        'delta': total - notification_on_total
     }))
