@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "solutionName": {
+        "value": "cryp"
+      },
+      "environmentName": {
+          "value": "dev"
+      },
+      "appSettings": {
+        "value": {
+            "url": "https://crypto.com/price",
+            "currency": "ethereum",
+            "shares": 0.0708,
+            "notificationOnTotal": 340
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,18 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "name": "mytimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 */10 * * * *"
+    },
+    {
+    "type": "eventHub",
+    "name": "notification",
+    "eventHubName": "notifications",
+    "connection": "EVENT_HUB_CONNECTION_STRING",
+    "direction": "out"
+}
+  ]
+}
