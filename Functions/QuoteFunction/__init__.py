@@ -1,14 +1,27 @@
-import datetime
 import logging
+import os
+from ..shared import utilities as utils
 
 import azure.functions as func
 
 
 def main(mytimer: func.TimerRequest) -> None:
-    utc_timestamp = datetime.datetime.utcnow().replace(
-        tzinfo=datetime.timezone.utc).isoformat()
+    settings = {
+        'url': os.getenv('URL'),
+        'currency': os.getenv('CURRENCY'),
+        'shares': os.getenv('SHARES'),
+        'notification_on_total': os.getenv('NOTIFICATION_ON_TOTAL')
+    }
 
-    if mytimer.past_due:
-        logging.info('The timer is past due!')
+    soup = utils.make_soup(os.getenv('URL'))
+    price = utils.get_price(soup, os.getenv('CURRENCY'))
 
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
+    total = float(os.getenv('SHARES')) * float(price)
+    notification_on_total = float(os.getenv('NOTIFICATION_ON_TOTAL'))
+
+    message = 'Notification {0} sent. Total = {1}. Threshold = {2}.'
+
+    if total > notification_on_total:
+        logging.warning(message.format('', total, notification_on_total))
+    else:
+        logging.info(message.format('not', total, notification_on_total))
