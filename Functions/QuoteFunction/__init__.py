@@ -25,4 +25,4 @@ def main(mytimer: func.TimerRequest, notification: func.Out[str]) -> None:
 
     notification_message = f"DELTA ALERT: {total - notification_on_total}"
 
-    notification.set(json.dumps(notification_message))
+    notification.set(notification_message)
