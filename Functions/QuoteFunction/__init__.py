@@ -26,5 +26,5 @@ def main(mytimer: func.TimerRequest, notification: func.Out[str]) -> None:
         'currency': currency,
         'total': total,
         'threshold': notification_on_total,
-        'delta': total - notification_on_total
+        'delta': round(total - notification_on_total, 2)
     }))
